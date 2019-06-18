@@ -1,21 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="data.access.MapUsers"%>
+<%@ page import="model.Product"%>
+<%@ page import="java.util.List" %>
 
 
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>shopping car</title>
+  <title>electronic store</title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%--    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">--%>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/css/mycss.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Add fancyBox -->
+    <link rel="stylesheet" href="jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="jquery.fancybox.pack.js"></script>
     <script type="text/javascript" src="resources/js/script.js"></script>
 
 </head>
+<div>
 <body>
 <div id="header" >
 
@@ -24,6 +31,7 @@
     <button id="login" class="btn btn-info"> login </button>
     <button id="signup" class="btn btn-info"> signup </button>
 </div>
+
 <div id="add-prouduct" class="hide">
   <pre>
       <label>Name: </label> <input type="text" name="product-name" id="product-name" required>
@@ -50,7 +58,6 @@
                <h4 > Price: <c:out value="$${product.price}"/></h4>
                <input type="text" name="quantity" class="form-control" value="1">
                <button class="btn btn-info" id="${product.id}" onclick="addToCart(this.id)"> Add To Cart</button>
-
            </div>
 <%--       </form>--%>
     </div>
@@ -75,13 +82,21 @@
             <td>${item.quantity}</td>
             <td>$${item.price * item.quantity}</td>
         </tr>
+
     </c:forEach>
 
 </table>
+
+    <h6 id="total-price">Total: $<%=session.getAttribute("total") != null ? session.getAttribute("total") : "0.0"%> </h6>
+
     <button class="btn btn-info" id="checkout"> Check Out</button>
 </div>
-<footer>
-    <p> </p>
-</footer>
+</div>
+
 </body>
+<%--<footer>--%>
+<%--    <p> Designed by: Tsige, Aklilu and Milki.</p>--%>
+
+<%--    <p> Contact info: <a href="mailto: tbirhane.mum.edu" >tbirhane.mum.edu</a>--%>
+<%--</footer>--%>
 </html>

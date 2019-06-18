@@ -25,6 +25,8 @@ public class ProductDB {
         productsDb.put(2, new Product(2, "LG G6","High quality camera", 4, "650"));
         productsDb.put(3, new Product(3, "S7 Edge", "With better performance", 5, "750"));
         productsDb.put(4, new Product(4, "P8 Huawie", "Long battery life", 5, "750"));
+        productsDb.put(5, new Product(5, "iPhone 7", "Slim design", 5, "900"));
+        productsDb.put(6, new Product(6, "P9 Huawie", "High performance", 5, "1050"));
     }
 
     public void addProduct(Product product){

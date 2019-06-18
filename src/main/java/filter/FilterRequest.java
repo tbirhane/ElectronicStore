@@ -10,7 +10,7 @@ import java.io.IOException;
 //@WebFilter("/Login")
 
 @WebFilter(filterName= "myFilter",
-        urlPatterns= { "/welcome.jsp"})
+        urlPatterns= { "/welcome.jsp","/billing.jsp"})
 public class FilterRequest implements Filter {
     @Override
     public void destroy() {

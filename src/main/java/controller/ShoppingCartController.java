@@ -40,8 +40,10 @@ public class ShoppingCartController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession session = req.getSession();
-        req.setAttribute("items", items.getAllItems());
+
+        // get the ordered item
         Product product = gson.fromJson(req.getParameter("item"), Product.class);
+
         items.addItem(product);
         //System.out.println("items: "+ items.getAllItems());
         if (session.getAttribute("cart") == null) {
@@ -52,6 +54,15 @@ public class ShoppingCartController extends HttpServlet {
             List<Product> cart = (List<Product>) session.getAttribute("cart");
             cart.add(product);
             session.setAttribute("cart", cart);
+        }
+        // total price
+        if(session.getAttribute("total") == null){
+            session.setAttribute("total", Double.parseDouble(product.getPrice()));
+        }
+        else {
+            double total_price = Double.parseDouble(product.getPrice()) +
+                    (Double)session.getAttribute("total");
+            session.setAttribute("total", total_price);
         }
        resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();

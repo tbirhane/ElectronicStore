@@ -1,6 +1,6 @@
 var id;
 /*
-* Add to cart
+* event handler after Add to cart btn click
 *
 * */
 function addToCart(clicked_id) {
@@ -16,18 +16,26 @@ function addToCart(clicked_id) {
     };
     $.post('order', {item: JSON.stringify(item)}).done(saveToCart).fail(fail);
 }
+// event handler after remove btn click
 function removeItemFromCart(clicked_id) {
-   alert(clicked_id);
+ //  alert(clicked_id);
     id = clicked_id;
     id = clicked_id.split("-")[1];
     $.get("removeitem",{removeitem:JSON.stringify(id)}).done(removed).fail(fail);
-//continue
+
 }
+// removes item from cart
 function removed(data) {
-    alert(data);
-   $('#item-'+data).parent().css("display","none").remove();
+   // alert(data);
+
+    var td = $('#item-'+data).parent();
+    var value = td.siblings()[4].innerText.split("$")[1].trim();
+    var tr = td.parent();
+    tr.remove();
+    calculateTotal(-parseFloat(value));
       //parent.remove();
 }
+//save item details to cart
 function saveToCart(data) {
 
     console.log(parseInt(data.price.trim()));
@@ -40,9 +48,18 @@ function saveToCart(data) {
     var td3 =  $('<td>').text(data.name);
     var td4 =  $('<td>').text("$" + data.price);
     var td5 =  $('<td>').text(data.quantity);
-    var td6 =  $('<td>').text("$" + parseFloat(data.price) * parseInt(data.quantity));
+    var td6 =  $('<td>').addClass("subtotal").text("$" + parseFloat(data.price) * parseInt(data.quantity));
     var tr = $('<tr>').append(td1).append(td2).append(td3).append(td4).append(td5).append(td6);
     $('#order-table').append(tr);
+    calculateTotal(parseFloat(data.price) * parseInt(data.quantity));
+}
+//calculate total price
+function calculateTotal(data) {
+    console.log("data: "+data);
+     console.log($('#total-price').text());
+     var subtotal = $('#total-price').text().split("$")[1].trim();
+    // console.log("subtotal:" + subtotal);
+    $('#total-price').text("Total: $" + (parseFloat(subtotal) + (data)));
 }
 function fail(data) {
      alert("fail");
@@ -61,6 +78,7 @@ $(function () {
     //$('.btn').click(addToCart,id);
     $('#checkout').click(checkout);
 
+
     function sendProductDetails() {
         var productName = $('#product-name').val();
         var productDescription = $('#product-description').val();
@@ -71,6 +89,7 @@ $(function () {
         var product = new Product(productName,productDescription,productQuantity,productPrice);
         $.post('products',{product: JSON.stringify(product)}, addProduct, "json");
 }
+// adds a product to page
     function addProduct(data) {
         console.log("add called");
         //var form = $("<form>").attr("action","order").attr("method","post");
@@ -93,6 +112,7 @@ $(function () {
         $("#container").prepend($("<div>").addClass("col-sm-4 col-md-3 products").append(prodiv));
         $('#add-prouduct').addClass("hide");
     }
+    // display add product form
     function displayPage() {
         $('#add-prouduct').removeClass("hide");
     }
@@ -118,12 +138,10 @@ $(function () {
     function loadLoginPage(){
         //$.ajax({ "url": "login.jsp", "type": "GET", "success": myAjaxSuccessFunction, "error": ajaxFailure});
         window.location.href = "login.jsp";
-    }
-    function myAjaxSuccessFunction() {
-       // alert("page loaded");
-        $.get('login.jsp')
+       // $('#login').load('login.jsp');
 
     }
+
 
 });
 

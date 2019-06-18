@@ -1,5 +1,6 @@
 $(function () {
     $('#btn').click(placeOrder);
+    $('#logout-button').click(logout);
     function placeOrder() {
         var checkout = {action: "checkout"};
         $.get('checkout',{checkout: JSON.stringify("checkout")}).done(confirm).fail(fail);
@@ -16,6 +17,12 @@ $(function () {
     }
     function message(err) {
         alert(err);
+    }
+    function logout() {
+        $.post('logout',{logout:JSON.stringify("logout")}).done(out).fail(fail);
+    }
+    function out() {
+        alert("out");
     }
 });
 

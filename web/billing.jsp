@@ -117,8 +117,11 @@
     <p id="message">
 
     </p>
-    <a href="products"> Continute shopping</a>
+    <a href="products"> Continute shopping ... </a>
+    <form action="logout" method="post">
 
+        <input type="submit" name="logout" value="logout">
+    </form>
 </div>
 <%--</form>--%>
 <div id="pop">This is just to try</div>

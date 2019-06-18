@@ -73,7 +73,7 @@ public class Login extends HttpServlet {
                 resp.addCookie(cUserName);
                 resp.addCookie(rememberMecookie);
             }
-            resp.sendRedirect("welcome.jsp");
+            resp.sendRedirect("products");
         }
         else {
             session.setAttribute("msg", " Invalid user name and password!");
